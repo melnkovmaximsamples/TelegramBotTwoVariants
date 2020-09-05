@@ -5,12 +5,13 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Telegram.Bot;
 using TelegramBot.Bot;
+using TelegramBotClient.Abstractions;
 
 namespace TelegramBot
 {
@@ -51,12 +52,19 @@ namespace TelegramBot
 
             app.UseAuthorization();
 
+
+            app.Use((context, next) =>
+            {
+                context.Request.EnableBuffering();
+                return next();
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "/api/{controller=Message}/{action=Update}");
-            });
+            }); 
         }
     }
 }

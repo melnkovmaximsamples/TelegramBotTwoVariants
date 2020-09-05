@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Telegram.Bot;
+using TelegramBot.Commands;
+using TelegramBotClient.Abstractions;
 
 namespace TelegramBot.Bot
 {
@@ -25,7 +26,7 @@ namespace TelegramBot.Bot
                 .GetTypes()
                 .Where(type => type.IsClass && !type.IsAbstract && type.IsSubclassOf(typeof(Command)))
                 .ToList()
-                .ForEach(type => _commandList((Command)Activator.CreateInstance(type)));
+                .ForEach(type => _commandList.Add((Command)Activator.CreateInstance(type)));
         }
     }
 }

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Telegram.Bot;
-using Telegram.Bot.Types;
+using System.Threading.Tasks;
 using TelegramBot.Bot;
+using TelegramBotClient.Abstractions;
+using TelegramBotClient.Models;
 
 namespace TelegramBot.Controllers
 {
@@ -43,6 +38,12 @@ namespace TelegramBot.Controllers
                 }
             }
 
+            // If need read full body before create model
+            //string result;
+            //using (var reader = new StreamReader(Request.Body, Encoding.UTF8))
+            //{
+            //    result = await reader.ReadToEndAsync();
+            //}
             return Ok();
         }
     }

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Telegram.Bot;
 using TelegramBot.Models;
 
 namespace TelegramBot.Controllers

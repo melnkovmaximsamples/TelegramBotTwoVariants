@@ -1,7 +1,7 @@
-﻿using Telegram.Bot;
-using Telegram.Bot.Types;
+﻿using TelegramBotClient.Abstractions;
+using TelegramBotClient.Models;
 
-namespace TelegramBot.Bot
+namespace TelegramBot.Commands
 {
     public abstract class Command
     {
