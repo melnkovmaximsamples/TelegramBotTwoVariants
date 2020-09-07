@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using TelegramBot.Bot;
 using TelegramBotClient.Abstractions;
 using TelegramBotClient.Models;
@@ -10,16 +14,15 @@ namespace TelegramBot.Controllers
     [Route("api/message/update")]
     public class MessageController : Controller
     {
-        private const string BotName = "mybot";
-        private ITelegramBotClient _client;
-        private Invoker _invoker;
-        private IConfiguration _config;
+        private readonly BotSettings _settings;
+        private readonly ITelegramBotClient _client;
+        private readonly Invoker _invoker;
 
-        public MessageController(ITelegramBotClient client, Invoker invoker, IConfiguration config)
+        public MessageController(ITelegramBotClient client, Invoker invoker, BotSettings settings)
         {
             _client = client;
             _invoker = invoker;
-            _config = config;
+            _settings = settings;
         }
 
         [HttpPost]
@@ -31,7 +34,7 @@ namespace TelegramBot.Controllers
 
             foreach (var command in commands)
             {
-                if (command.Contains(message.Text, BotName))
+                if (command.Contains(message.Text, _settings.BotName))
                 {
                     await Task.Run(() => command.Execute(message, _client));
                     break;

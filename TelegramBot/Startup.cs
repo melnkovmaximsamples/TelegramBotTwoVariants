@@ -24,15 +24,27 @@ namespace TelegramBot
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson();
-            services.AddSingleton<ITelegramBotClient, MyTelegramBotClient>();
-            services.AddSingleton<Invoker>();
+            services.AddTransient<BotSettings>();
+            services.AddSingleton<MyTelegramBotClient>();
+            services.AddSingleton<LibTelegramBotClient>();
+            services.AddSingleton<ITelegramBotClient>(serviceProvider =>
+            {
+                switch(serviceProvider.GetRequiredService<BotSettings>().BotType)
+                {
+                    case "MyBot":
+                        return serviceProvider.GetService<MyTelegramBotClient>();
+                    case "LibBot":
+                        return serviceProvider.GetService<LibTelegramBotClient>();
+                    default:
+                        throw new KeyNotFoundException(message: "Not found key for ITelegramBotService");
+                };
+            });
+            services.AddTransient<Invoker>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ITelegramBotClient client)
         {
             if (env.IsDevelopment())

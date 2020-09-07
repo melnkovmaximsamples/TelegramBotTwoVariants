@@ -2,23 +2,26 @@
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using TelegramBotClient.Abstractions;
 
 namespace TelegramBot.Bot
 {
-    public class MyTelegramBotClient : TelegramBotClient.TelegramBotClient
+    public class MyTelegramBotClient : TelegramBotClient.TelegramBotClient, ITelegramBotClient
     {
-        private const string ServiceUrl = @"https://cee5521d82ce.ngrok.io";
-        private const string BotKey = "1366437273:AAGpXWEEC-Q2v6jUwIlGPluBbzWIdrfobGo";
+        private readonly BotSettings _settings;
 
-        public MyTelegramBotClient()
-            : base(BotKey)
+        public MyTelegramBotClient(BotSettings settings)
+            : base(settings.BotKey)
         {
+            _settings = settings;
             SetWebHook();
         }
 
         private async void SetWebHook()
         {
-            await base.SetWebhookAsync($"{ServiceUrl}/api/message/update");
+            await base.SetWebhookAsync($"{_settings.BotUrl}/api/message/update");
         }
     }
 }

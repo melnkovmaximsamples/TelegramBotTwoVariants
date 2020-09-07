@@ -9,13 +9,11 @@ namespace TelegramBot.Bot
 {
     public class Invoker
     {
-        private readonly ITelegramBotClient _client;
         private readonly List<Command> _commandList;
         public IReadOnlyList<Command> Commands => _commandList.AsReadOnly();
 
-        public Invoker(ITelegramBotClient client)
+        public Invoker()
         {
-            _client = client;
             _commandList = new List<Command>();
             AddCommands();
         }

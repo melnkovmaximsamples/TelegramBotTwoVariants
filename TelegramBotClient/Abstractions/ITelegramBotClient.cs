@@ -8,7 +8,6 @@ namespace TelegramBotClient.Abstractions
 {
     public interface ITelegramBotClient
     {
-        Task SetWebhookAsync(string url);
         Task SendTextMessageAsync(int chatId, string message, int messageId);
     }
 }
