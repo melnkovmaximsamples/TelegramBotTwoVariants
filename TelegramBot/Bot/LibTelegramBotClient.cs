@@ -29,5 +29,10 @@ namespace TelegramBot.Bot
         {
             await base.SendTextMessageAsync(chatId, text, replyToMessageId: replyToMessageId);
         }
+
+        public Task SendPhotoAsync(int chatId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

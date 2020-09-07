@@ -17,17 +17,7 @@ namespace TelegramBot.Bot
             var chatId = message.Chat.Id;
             var messageId = message.MessageId;
 
-            // API sendPhoto
-            using var http = new HttpClient();
-            using var fileStream = new FileStream(@"C:/Users/Maks/Desktop/112589.jpg", FileMode.Open, FileAccess.Read, FileShare.Read);
-            var form = new MultipartFormDataContent();
-            form.Add(new StringContent(chatId.ToString()), "chat_id");
-            form.Add(new StreamContent(fileStream), "photo", "photo");
-            var postUrl = $"https://api.telegram.org/bot1366437273:AAGpXWEEC-Q2v6jUwIlGPluBbzWIdrfobGo/sendPhoto";
-            HttpResponseMessage response = await http.PostAsync(postUrl, form);
-            response.EnsureSuccessStatusCode();
-            // end API sendPhoto
-
+            await client.SendPhotoAsync(chatId);
             await client.SendTextMessageAsync(chatId, "Hello!", messageId);
         }
     }

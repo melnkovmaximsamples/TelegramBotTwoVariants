@@ -36,7 +36,7 @@ namespace TelegramBot
                 {
                     case "MyBot":
                         return serviceProvider.GetService<MyTelegramBotClient>();
-                    case "LibBot":
+                    case "ThirdPartyBot":
                         return serviceProvider.GetService<LibTelegramBotClient>();
                     default:
                         throw new KeyNotFoundException(message: "Not found key for ITelegramBotService");

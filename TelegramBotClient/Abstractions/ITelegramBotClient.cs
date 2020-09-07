@@ -9,5 +9,6 @@ namespace TelegramBotClient.Abstractions
     public interface ITelegramBotClient
     {
         Task SendTextMessageAsync(int chatId, string message, int messageId);
+        Task SendPhotoAsync(int chatId);
     }
 }
